@@ -1,3 +1,5 @@
+// TODO: Add tile movement to state
+
 export type KlotskiState = number[][];
 
 export enum Direction {

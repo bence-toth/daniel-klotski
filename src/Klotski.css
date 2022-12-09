@@ -23,4 +23,21 @@
   cursor: pointer;
   border: 0;
   box-shadow: 0 0 0 0.5px inset black;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.klotski .tile button .number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: "Love Ya Like A Sister", cursive;
+  font-weight: bold;
+  font-size: 1.5vmax;
+  line-height: 1;
+  height: 3.5vmax;
+  width: 3.5vmax;
+  background-color: hsla(0deg 0% 0% / 66.7%);
 }

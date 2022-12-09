@@ -74,7 +74,7 @@ const Klotski = ({ size, image }: KlotskiProps) => {
                       })
                     }
                   >
-                    {tile}
+                    <span className="number">{tile + 1}</span>
                   </button>
                 )}
               </div>

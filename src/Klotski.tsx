@@ -11,10 +11,10 @@ interface KlotskiProps {
 }
 
 const Klotski = ({ size, image }: KlotskiProps) => {
-  const [klotskiState, klotskiDispatch] = useReducer(
-    klotskiReducer,
-    shuffleTiles(size)
-  );
+  const [klotskiState, klotskiDispatch] = useReducer(klotskiReducer, {
+    board: shuffleTiles(size),
+    movingTile: null,
+  });
 
   const windowKeypressHandler = useCallback((event: KeyboardEvent) => {
     if (["ArrowUp", "KeyW"].includes(event.code)) {
@@ -44,7 +44,7 @@ const Klotski = ({ size, image }: KlotskiProps) => {
   return (
     <div className="klotski-wrapper">
       <div className="klotski">
-        {klotskiState.map((row, rowIndex) => (
+        {klotskiState.board.map((row, rowIndex) => (
           <div
             key={rowIndex}
             className="row"

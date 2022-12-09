@@ -8,7 +8,6 @@
 .klotski {
   width: 95vmin;
   height: 95vmin;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
 }
@@ -23,5 +22,5 @@
   height: 100%;
   cursor: pointer;
   border: 0;
-  box-shadow: 0 0 0 1px inset red;
+  box-shadow: 0 0 0 0.5px inset white;
 }

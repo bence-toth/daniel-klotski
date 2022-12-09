@@ -45,27 +45,58 @@ const klotskiReducer = (
   state: KlotskiState,
   action: KlotskiAction
 ): KlotskiState => {
-  if (action.type === "moveInDirection") {
-    switch (action.direction) {
-      case Direction.Up:
-      case Direction.Right:
-      case Direction.Down:
-      case Direction.Left:
-        return state;
-    }
-  }
+  // if (action.type === "moveInDirection") {
+  //   switch (action.direction) {
+  //     case Direction.Up:
+  //     case Direction.Right:
+  //     case Direction.Down:
+  //     case Direction.Left:
+  //       return state;
+  //   }
+  // }
   if (action.type === "moveTile") {
-    return state;
+    // Move tile up
+    if (state[action.tileY - 1]?.[action.tileX] === 0) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[action.tileY - 1][action.tileX] =
+        stateCopy[action.tileY][action.tileX];
+      stateCopy[action.tileY][action.tileX] = 0;
+      return stateCopy;
+    }
+    // Move tile down
+    if (state[action.tileY + 1]?.[action.tileX] === 0) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[action.tileY + 1][action.tileX] =
+        stateCopy[action.tileY][action.tileX];
+      stateCopy[action.tileY][action.tileX] = 0;
+      return stateCopy;
+    }
+    // Move tile left
+    if (state[action.tileY][action.tileX - 1] === 0) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[action.tileY][action.tileX - 1] =
+        stateCopy[action.tileY][action.tileX];
+      stateCopy[action.tileY][action.tileX] = 0;
+      return stateCopy;
+    }
+    // Move tile right
+    if (state[action.tileY][action.tileX + 1] === 0) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[action.tileY][action.tileX + 1] =
+        stateCopy[action.tileY][action.tileX];
+      stateCopy[action.tileY][action.tileX] = 0;
+      return stateCopy;
+    }
   }
   return state;
 };
 
 const Klotski = ({ size, image }: KlotskiProps) => {
-  console.log(shuffleTiles(5));
   const [klotskiState, klotskiDispatch] = useReducer(
     klotskiReducer,
     shuffleTiles(size)
   );
+
   return (
     <div className="klotski-wrapper">
       <div className="klotski">
@@ -74,6 +105,7 @@ const Klotski = ({ size, image }: KlotskiProps) => {
             key={rowIndex}
             className="row"
             style={{ height: `${100 / size}%` }}
+            data-items={row.join(" , ")}
           >
             {row.map((tile, columnIndex) => (
               <div
@@ -90,6 +122,13 @@ const Klotski = ({ size, image }: KlotskiProps) => {
                         100 * ((tile % size) / (size - 1))
                       }% ${(100 * Math.floor(tile / size)) / (size - 1)}%`,
                     }}
+                    onClick={() =>
+                      klotskiDispatch({
+                        type: "moveTile",
+                        tileX: columnIndex,
+                        tileY: rowIndex,
+                      })
+                    }
                   >
                     {tile}
                   </button>

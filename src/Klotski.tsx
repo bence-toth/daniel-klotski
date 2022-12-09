@@ -32,7 +32,7 @@ type KlotskiAction = MoveInDirectionAction | MoveTileAction;
 const shuffleTiles = (size: number) =>
   Array(size ** 2)
     .fill(null)
-    .map((_, index) => index + 1)
+    .map((_, index) => index)
     .reduce(
       (carry: number[][], _, index, original) =>
         index % size === 0
@@ -81,7 +81,19 @@ const Klotski = ({ size, image }: KlotskiProps) => {
                 className="tile"
                 style={{ width: `${100 / size}%` }}
               >
-                {tile !== size ** 2 && <button>{tile}</button>}
+                {tile !== 0 && (
+                  <button
+                    style={{
+                      backgroundImage: `url(${image})`,
+                      backgroundSize: `${size * 100}%`,
+                      backgroundPosition: `${
+                        100 * ((tile % size) / (size - 1))
+                      }% ${(100 * Math.floor(tile / size)) / (size - 1)}%`,
+                    }}
+                  >
+                    {tile}
+                  </button>
+                )}
               </div>
             ))}
           </div>

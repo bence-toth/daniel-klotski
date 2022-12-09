@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useCallback, useEffect } from "react";
 
 import "./Klotski.css";
 
@@ -45,15 +45,40 @@ const klotskiReducer = (
   state: KlotskiState,
   action: KlotskiAction
 ): KlotskiState => {
-  // if (action.type === "moveInDirection") {
-  //   switch (action.direction) {
-  //     case Direction.Up:
-  //     case Direction.Right:
-  //     case Direction.Down:
-  //     case Direction.Left:
-  //       return state;
-  //   }
-  // }
+  if (action.type === "moveInDirection") {
+    let blankTileX = state.filter((row) => row.includes(0))[0].indexOf(0);
+    let blankTileY = state.findIndex((row) => row.includes(0));
+    // Move tile up
+    if (action.direction === Direction.Up && blankTileY < state.length - 1) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[blankTileY][blankTileX] = stateCopy[blankTileY + 1][blankTileX];
+      stateCopy[blankTileY + 1][blankTileX] = 0;
+      return stateCopy;
+    }
+    // Move tile down
+    if (action.direction === Direction.Down && blankTileY > 0) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[blankTileY][blankTileX] = stateCopy[blankTileY - 1][blankTileX];
+      stateCopy[blankTileY - 1][blankTileX] = 0;
+      return stateCopy;
+    }
+    // Move tile left
+    if (action.direction === Direction.Left && blankTileX < state.length - 1) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[blankTileY][blankTileX] = stateCopy[blankTileY][blankTileX + 1];
+      stateCopy[blankTileY][blankTileX + 1] = 0;
+      return stateCopy;
+    }
+    // Move tile right
+    if (action.direction === Direction.Right && blankTileX > 0) {
+      const stateCopy = state.map((row) => row.map((item) => item));
+      stateCopy[blankTileY][blankTileX] = stateCopy[blankTileY][blankTileX - 1];
+      stateCopy[blankTileY][blankTileX - 1] = 0;
+      return stateCopy;
+    }
+    return state;
+  }
+
   if (action.type === "moveTile") {
     // Move tile up
     if (state[action.tileY - 1]?.[action.tileX] === 0) {
@@ -96,6 +121,32 @@ const Klotski = ({ size, image }: KlotskiProps) => {
     klotskiReducer,
     shuffleTiles(size)
   );
+
+  const windowKeypressHandler = useCallback((event: KeyboardEvent) => {
+    if (["ArrowUp", "KeyW"].includes(event.code)) {
+      klotskiDispatch({ type: "moveInDirection", direction: Direction.Up });
+    }
+    if (["ArrowDown", "KeyS"].includes(event.code)) {
+      klotskiDispatch({ type: "moveInDirection", direction: Direction.Down });
+    }
+    if (["ArrowLeft", "KeyA"].includes(event.code)) {
+      klotskiDispatch({ type: "moveInDirection", direction: Direction.Left });
+    }
+    if (["ArrowRight", "KeyD"].includes(event.code)) {
+      klotskiDispatch({
+        type: "moveInDirection",
+        direction: Direction.Right,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", windowKeypressHandler);
+
+    return () => {
+      window.removeEventListener("keydown", windowKeypressHandler);
+    };
+  }, [windowKeypressHandler]);
 
   return (
     <div className="klotski-wrapper">

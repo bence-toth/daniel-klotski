@@ -1,9 +1,7 @@
 import Klotski from "./Klotski";
 
-const App = () => (
-  <div>
-    <Klotski size={4} />
-  </div>
-);
+import volcano from "./pictures/volcano.jpg";
+
+const App = () => <Klotski size={4} image={volcano} />;
 
 export default App;

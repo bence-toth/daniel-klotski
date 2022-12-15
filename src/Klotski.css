@@ -28,6 +28,62 @@
   justify-content: flex-start;
 }
 
+.klotski .tile.is-moving-up button {
+  animation: tile-moving-up 0.25s;
+}
+
+@keyframes tile-moving-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.klotski .tile.is-moving-down button {
+  animation: tile-moving-down 0.25s;
+}
+
+@keyframes tile-moving-down {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.klotski .tile.is-moving-left button {
+  animation: tile-moving-left 0.25s;
+}
+
+@keyframes tile-moving-left {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.klotski .tile.is-moving-right button {
+  animation: tile-moving-right 0.25s;
+}
+
+@keyframes tile-moving-right {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
 .klotski .tile button .number {
   display: flex;
   align-items: center;

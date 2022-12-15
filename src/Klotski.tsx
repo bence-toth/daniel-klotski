@@ -72,18 +72,18 @@ const Klotski = ({ size, image }: KlotskiProps) => {
                 key={columnIndex}
                 style={{ width: `${100 / size}%` }}
                 className={classNames("tile", {
-                  // "is-moving-up":
-                  //   boardState.movingTile?.tile === tile &&
-                  //   boardState.movingTile?.direction === Direction.Up,
-                  // "is-moving-down":
-                  //   boardState.movingTile?.tile === tile &&
-                  //   boardState.movingTile?.direction === Direction.Down,
-                  // "is-moving-right":
-                  //   boardState.movingTile?.tile === tile &&
-                  //   boardState.movingTile?.direction === Direction.Right,
-                  // "is-moving-left":
-                  //   boardState.movingTile?.tile === tile &&
-                  //   boardState.movingTile?.direction === Direction.Left,
+                  "is-moving-up":
+                    boardState.movingTile?.tile === tile &&
+                    boardState.movingTile?.direction === Direction.Up,
+                  "is-moving-down":
+                    boardState.movingTile?.tile === tile &&
+                    boardState.movingTile?.direction === Direction.Down,
+                  "is-moving-right":
+                    boardState.movingTile?.tile === tile &&
+                    boardState.movingTile?.direction === Direction.Right,
+                  "is-moving-left":
+                    boardState.movingTile?.tile === tile &&
+                    boardState.movingTile?.direction === Direction.Left,
                 })}
               >
                 {tile !== 0 && (

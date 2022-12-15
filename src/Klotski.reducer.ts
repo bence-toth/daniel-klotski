@@ -76,34 +76,50 @@ const moveTileReducer = (
   // Move tile up
   if (board[action.tileY - 1]?.[action.tileX] === 0) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[action.tileY - 1][action.tileX] =
-      boardCopy[action.tileY][action.tileX];
+    const movingTile = boardCopy[action.tileY][action.tileX];
+    boardCopy[action.tileY - 1][action.tileX] = movingTile;
     boardCopy[action.tileY][action.tileX] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      movingTile: { tile: movingTile, direction: Direction.Up },
+    };
   }
   // Move tile down
   if (board[action.tileY + 1]?.[action.tileX] === 0) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[action.tileY + 1][action.tileX] =
-      boardCopy[action.tileY][action.tileX];
+    const movingTile = boardCopy[action.tileY][action.tileX];
+    boardCopy[action.tileY + 1][action.tileX] = movingTile;
     boardCopy[action.tileY][action.tileX] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      movingTile: { tile: movingTile, direction: Direction.Down },
+    };
   }
   // Move tile left
   if (board[action.tileY][action.tileX - 1] === 0) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[action.tileY][action.tileX - 1] =
-      boardCopy[action.tileY][action.tileX];
+    const movingTile = boardCopy[action.tileY][action.tileX];
+    boardCopy[action.tileY][action.tileX - 1] = movingTile;
     boardCopy[action.tileY][action.tileX] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      movingTile: { tile: movingTile, direction: Direction.Left },
+    };
   }
   // Move tile right
   if (board[action.tileY][action.tileX + 1] === 0) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[action.tileY][action.tileX + 1] =
-      boardCopy[action.tileY][action.tileX];
+    const movingTile = boardCopy[action.tileY][action.tileX];
+    boardCopy[action.tileY][action.tileX + 1] = movingTile;
     boardCopy[action.tileY][action.tileX] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      movingTile: { tile: movingTile, direction: Direction.Right },
+    };
   }
   return state;
 };

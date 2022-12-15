@@ -1,10 +1,8 @@
-// TODO: Add tile movement to state
-
 export enum Direction {
-  Up,
-  Down,
-  Left,
-  Right,
+  Up = 1,
+  Down = 2,
+  Left = 3,
+  Right = 4,
 }
 
 interface MovingTile {
@@ -20,6 +18,7 @@ export interface KlotskiState {
 interface MoveInDirectionAction {
   type: "moveInDirection";
   direction: Direction;
+  skipAnimation?: boolean;
 }
 
 interface MoveTileAction {
@@ -40,30 +39,58 @@ const moveInDirectionReducer = (
   // Move tile up
   if (action.direction === Direction.Up && blankTileY < board.length - 1) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[blankTileY][blankTileX] = boardCopy[blankTileY + 1][blankTileX];
+    const movingTile = boardCopy[blankTileY + 1][blankTileX];
+    boardCopy[blankTileY][blankTileX] = movingTile;
     boardCopy[blankTileY + 1][blankTileX] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      ...(!action.skipAnimation === true && {
+        movingTile: { tile: movingTile, direction: Direction.Up },
+      }),
+    };
   }
   // Move tile down
   if (action.direction === Direction.Down && blankTileY > 0) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[blankTileY][blankTileX] = boardCopy[blankTileY - 1][blankTileX];
+    const movingTile = boardCopy[blankTileY - 1][blankTileX];
+    boardCopy[blankTileY][blankTileX] = movingTile;
     boardCopy[blankTileY - 1][blankTileX] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      ...(!action.skipAnimation === true && {
+        movingTile: { tile: movingTile, direction: Direction.Down },
+      }),
+    };
   }
   // Move tile left
   if (action.direction === Direction.Left && blankTileX < board.length - 1) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[blankTileY][blankTileX] = boardCopy[blankTileY][blankTileX + 1];
+    const movingTile = boardCopy[blankTileY][blankTileX + 1];
+    boardCopy[blankTileY][blankTileX] = movingTile;
     boardCopy[blankTileY][blankTileX + 1] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      ...(!action.skipAnimation === true && {
+        movingTile: { tile: movingTile, direction: Direction.Left },
+      }),
+    };
   }
   // Move tile right
   if (action.direction === Direction.Right && blankTileX > 0) {
     const boardCopy = board.map((row) => row.map((item) => item));
-    boardCopy[blankTileY][blankTileX] = boardCopy[blankTileY][blankTileX - 1];
+    const movingTile = boardCopy[blankTileY][blankTileX - 1];
+    boardCopy[blankTileY][blankTileX] = movingTile;
     boardCopy[blankTileY][blankTileX - 1] = 0;
-    return { ...state, board: boardCopy };
+    return {
+      ...state,
+      board: boardCopy,
+      ...(!action.skipAnimation === true && {
+        movingTile: { tile: movingTile, direction: Direction.Right },
+      }),
+    };
   }
   return state;
 };

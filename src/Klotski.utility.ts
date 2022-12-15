@@ -1,4 +1,4 @@
-const shuffleTiles = (size: number) =>
+const buildBoard = (size: number) =>
   Array(size ** 2)
     .fill(null)
     .map((_, index) => index)
@@ -10,4 +10,4 @@ const shuffleTiles = (size: number) =>
       []
     );
 
-export { shuffleTiles };
+export { buildBoard };

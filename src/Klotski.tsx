@@ -1,7 +1,7 @@
 import { useReducer, useCallback, useEffect } from "react";
 
 import klotskiReducer, { Direction } from "./Klotski.reducer";
-import { shuffleTiles } from "./Klotski.utility";
+import { buildBoard } from "./Klotski.utility";
 
 import "./Klotski.css";
 import classNames from "classnames";
@@ -13,15 +13,12 @@ interface KlotskiProps {
 
 const Klotski = ({ size, image }: KlotskiProps) => {
   const [boardState, dispatchBoardAction] = useReducer(klotskiReducer, {
-    board: shuffleTiles(size),
+    board: buildBoard(size),
     movingTile: null,
   });
 
   const windowKeypressHandler = useCallback(
     (event: KeyboardEvent) => {
-      if (boardState.movingTile !== null) {
-        return;
-      }
       if (["ArrowUp", "KeyW"].includes(event.code)) {
         dispatchBoardAction({
           type: "moveInDirection",
@@ -47,7 +44,7 @@ const Klotski = ({ size, image }: KlotskiProps) => {
         });
       }
     },
-    [boardState.movingTile, dispatchBoardAction]
+    [dispatchBoardAction]
   );
 
   useEffect(() => {
@@ -56,6 +53,17 @@ const Klotski = ({ size, image }: KlotskiProps) => {
       window.removeEventListener("keydown", windowKeypressHandler);
     };
   }, [windowKeypressHandler]);
+
+  useEffect(() => {
+    for (let i = 0; i < size ** 3; i++) {
+      const randomDirection = Math.floor(Math.random() * 4) + 1;
+      dispatchBoardAction({
+        type: "moveInDirection",
+        direction: randomDirection,
+        skipAnimation: true,
+      });
+    }
+  }, [size]);
 
   return (
     <div className="klotski-wrapper">

@@ -29,7 +29,7 @@
 }
 
 .klotski .tile.is-moving-up button {
-  animation: tile-moving-up 0.25s;
+  animation: tile-moving-up 0.25s 1 forwards;
 }
 
 @keyframes tile-moving-up {
@@ -43,7 +43,7 @@
 }
 
 .klotski .tile.is-moving-down button {
-  animation: tile-moving-down 0.25s;
+  animation: tile-moving-down 0.25s 1 forwards;
 }
 
 @keyframes tile-moving-down {
@@ -57,7 +57,7 @@
 }
 
 .klotski .tile.is-moving-left button {
-  animation: tile-moving-left 0.25s;
+  animation: tile-moving-left 0.25s 1 forwards;
 }
 
 @keyframes tile-moving-left {
@@ -71,7 +71,7 @@
 }
 
 .klotski .tile.is-moving-right button {
-  animation: tile-moving-right 0.25s;
+  animation: tile-moving-right 0.25s 1 forwards;
 }
 
 @keyframes tile-moving-right {
@@ -91,9 +91,9 @@
   color: white;
   font-family: "Love Ya Like A Sister", cursive;
   font-weight: bold;
-  font-size: 1.5vmax;
+  font-size: 3vmin;
   line-height: 1;
-  height: 3.5vmax;
-  width: 3.5vmax;
+  height: 5vmin;
+  width: 5vmin;
   background-color: hsla(0deg 0% 0% / 66.7%);
 }
